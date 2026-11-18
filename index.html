@@ -1,11 +1,303 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <title>小泽淘号</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小泽淘号 · 和平精英账号收出</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a0f;color:#e0e0e0;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+a{text-decoration:none;color:inherit}
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* 首屏 */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 20px 90px}
+.hero h1{font-size:clamp(26px,7vw,52px);font-weight:900;background:linear-gradient(135deg,#ff6a00,#ffb347,#00f0ff);-webkit-background-clip:text;text-fill-color:transparent;background-clip:text;margin-bottom:12px;min-height:1.4em;animation:fadeInDown 1s ease}
+.hero .sub{font-size:clamp(13px,3.4vw,19px);color:#aaa;margin-bottom:28px;animation:fadeInUp 1s ease .3s both}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* 数字 */
+.stats{display:flex;gap:26px;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
+.stat .num{font-size:32px;font-weight:800;color:#ff6a00;line-height:1.1}
+.stat .label{font-size:12px;color:#888}
+.btn{display:inline-block;padding:14px 38px;background:linear-gradient(135deg,#ff6a00,#ff8c00);color:#fff;font-size:17px;font-weight:700;border-radius:50px;box-shadow:0 4px 25px rgba(255,106,0,.4);animation:fadeInUp 1s ease .6s both}
+.btn:active{transform:scale(.95)}
+
+/* 播报 */
+.marquee{position:relative;z-index:1;background:#111;padding:10px 0;overflow:hidden;border-top:1px solid #222;border-bottom:1px solid #222}
+.marquee span{display:inline-block;white-space:nowrap;animation:scroll 22s linear infinite;color:#ff6a00;font-size:13px}
+@keyframes scroll{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+
+/* 通用 */
+.section-title{text-align:center;font-size:24px;font-weight:800;margin-bottom:24px;color:#fff}
+.section-title span{color:#ff6a00}
+.filter-section,.services,.process,.reviews,.faq{position:relative;z-index:1;padding:38px 16px;max-width:1100px;margin:0 auto}
+
+/* 筛选 */
+.filter-row{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:14px;justify-content:center}
+.filter-chip{padding:8px 17px;background:#1a1a2e;border:1px solid #333;border-radius:20px;color:#ccc;font-size:13px;cursor:pointer;transition:all .25s}
+.filter-chip.active{background:#ff6a00;color:#fff;border-color:#ff6a00}
+.filter-input{width:100%;max-width:400px;padding:12px 18px;background:#1a1a2e;border:1px solid #333;border-radius:14px;color:#fff;font-size:15px;margin:8px auto;display:block;outline:none;-webkit-appearance:none}
+
+/* 卡片 */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{background:#12121f;border:1px solid #222;border-radius:16px;padding:18px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-5px);border-color:#ff6a00;box-shadow:0 8px 30px rgba(255,106,0,.2)}
+.card .hot{position:absolute;top:12px;right:12px;background:#ff3030;color:#fff;font-size:11px;padding:3px 8px;border-radius:10px}
+.card .rank{font-size:23px;font-weight:800;margin-bottom:4px}
+.card .season{font-size:12px;color:#00f0ff;margin-bottom:10px}
+.card .info{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px}
+.card .info span{font-size:11px;background:#1a1a2e;padding:4px 9px;border-radius:9px;color:#aaa}
+.card .price{font-size:27px;font-weight:800;color:#ff6a00;margin-bottom:4px}
+.card .note{font-size:12px;color:#888;margin-bottom:12px}
+.card .copy-btn{width:100%;padding:11px;background:#1a1a2e;border:1px solid #ff6a00;color:#ff6a00;border-radius:10px;font-size:14px;cursor:pointer}
+.card .copy-btn:active{background:#ff6a00;color:#fff}
+.empty{grid-column:1/-1;text-align:center;color:#666;padding:36px}
+
+/* 服务 */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.svc-card{background:#12121f;border:1px solid #222;border-radius:16px;padding:22px;text-align:center;transition:all .25s}
+.svc-card:hover{border-color:#00f0ff;box-shadow:0 0 20px rgba(0,240,255,.15);transform:translateY(-4px)}
+.svc-card .icon{font-size:36px;margin-bottom:10px}
+.svc-card h3{font-size:17px;margin-bottom:6px;color:#fff}
+.svc-card p{font-size:13px;color:#888;line-height:1.6}
+
+/* 红包 */
+.bonus{position:relative;z-index:1;background:linear-gradient(135deg,#1a0a00,#0a0a0f);padding:38px 16px;text-align:center;border-top:1px solid rgba(255,106,0,.3);border-bottom:1px solid rgba(255,106,0,.3)}
+.bonus h2{font-size:22px;color:#ff6a00;margin-bottom:14px}
+.bonus p{color:#ccc;font-size:15px;margin-bottom:6px}
+
+/* 流程 */
+.proc-step{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start}
+.proc-num{width:38px;height:38px;background:linear-gradient(135deg,#ff6a00,#ff8c00);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;color:#fff}
+.proc-content h3{font-size:15px;color:#fff;margin-bottom:3px}
+.proc-content p{font-size:13px;color:#888;line-height:1.6}
+
+/* 评价 */
+.review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px}
+.review{background:#12121f;border:1px solid #222;border-radius:12px;padding:16px}
+.review .stars{color:#ff6a00;margin-bottom:7px;letter-spacing:2px}
+.review p{font-size:13px;color:#ccc;margin-bottom:6px;line-height:1.6}
+.review .who{font-size:12px;color:#666}
+
+/* 联系 */
+.contact{position:relative;z-index:1;padding:44px 16px;text-align:center;background:#0f0f1a}
+.contact .qq{font-size:30px;font-weight:800;color:#ff6a00;margin-bottom:14px;letter-spacing:1px}
+.contact .qq-copy{display:inline-block;padding:12px 28px;background:#1a1a2e;border:2px solid #ff6a00;color:#ff6a00;border-radius:25px;font-size:15px;margin:7px;cursor:pointer}
+.contact .qq-copy:active{background:#ff6a00;color:#fff}
+.contact .warn{font-size:12.5px;color:#ff8888;margin-top:16px;padding:11px;background:#1a0a0a;border:1px solid #3a1515;border-radius:10px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.7}
+
+/* FAQ */
+.faq-item{background:#12121f;border:1px solid #222;border-radius:12px;padding:16px;margin-bottom:11px}
+.faq-item h3{font-size:14.5px;color:#fff;margin-bottom:5px}
+.faq-item p{font-size:13px;color:#888;line-height:1.6}
+
+footer{position:relative;z-index:1;text-align:center;padding:26px 16px 90px;color:#555;font-size:12px;border-top:1px solid #222;line-height:1.8}
+
+/* 底部常驻条 */
+.mobile-bar{position:fixed;bottom:0;left:0;width:100%;background:linear-gradient(135deg,#ff6a00,#ff8c00);color:#fff;text-align:center;padding:15px;font-size:16px;font-weight:700;z-index:999;box-shadow:0 -3px 18px rgba(255,106,0,.35)}
+
+/* 顶部导航 */
+.topbar{position:fixed;top:0;left:0;width:100%;z-index:998;background:rgba(10,10,15,.85);backdrop-filter:blur(10px);border-bottom:1px solid #1c1c28;padding:11px 16px;display:flex;align-items:center;justify-content:space-between}
+.topbar .logo{font-weight:900;font-size:17px;color:#fff}
+.topbar .logo em{color:#ff6a00;font-style:normal}
+.topbar .top-btn{background:#ff6a00;color:#fff;font-size:13px;font-weight:700;padding:7px 15px;border-radius:20px}
+.hero{padding-top:110px}
+
+.fade-in{opacity:0;transform:translateY(20px);transition:all .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
 </head>
 <body>
-  <h1>小泽淘号网站</h1>
-  <p>网页搭建成功！</p>
+
+<div class="topbar">
+  <div class="logo">小泽<em>淘号</em></div>
+  <a class="top-btn" href="https://qm.qq.com/q/placeholder" onclick="openQQ();return false;">联系收出号</a>
+</div>
+
+<canvas id="particles"></canvas>
+
+<!-- 首屏 -->
+<section class="hero">
+  <h1 id="typewriter">小泽淘号</h1>
+  <p class="sub">和平精英账号 · 高价收 · 放心出 · 成交送红包</p>
+  <div class="stats">
+    <div class="stat"><div class="num" id="n1">0</div><div class="label">成交单数</div></div>
+    <div class="stat"><div class="num" id="n2">0</div><div class="label">在售号源</div></div>
+    <div class="stat"><div class="num" id="n3">0</div><div class="label">好评率%</div></div>
+  </div>
+  <a class="btn" href="#" onclick="openQQ();return false;">立即加QQ 2363320347</a>
+</section>
+
+<!-- 播报 -->
+<div class="marquee"><span>🔥 刚成交一笔 无敌战神号 ¥8800　·　💰 卖出送红包　·　🎮 收号打款秒到　·　⚡ 担保交割零风险　·　🎁 买号也送红包</span></div>
+
+<!-- 号源 -->
+<section class="filter-section fade-in" id="hao">
+  <h2 class="section-title">在售<span>号源</span></h2>
+  <div class="filter-row" id="rankFilter"></div>
+  <div class="filter-row" id="seasonFilter"></div>
+  <select class="filter-input" id="skinFilter">
+    <option value="">全部皮肤数</option>
+    <option value="100">100+ 皮肤</option>
+    <option value="200">200+ 皮肤</option>
+    <option value="300">300+ 皮肤</option>
+  </select>
+  <input class="filter-input" id="searchInput" placeholder="搜索段位 / 价格 / 关键词">
+  <div class="cards" id="cardList"></div>
+</section>
+
+<!-- 服务 -->
+<section class="services fade-in">
+  <h2 class="section-title">核心<span>服务</span></h2>
+  <div class="svc-grid">
+    <div class="svc-card"><div class="icon">💰</div><h3>高价收号</h3><p>报价透明<br>打款秒到，不压价不拖款</p></div>
+    <div class="svc-card"><div class="icon">🎯</div><h3>帮你淘号</h3><p>按需求匹配<br>验号仔细，拒绝货不对板</p></div>
+    <div class="svc-card"><div class="icon">📊</div><h3>免费估价</h3><p>发号源信息<br>免费评估市场价</p></div>
+    <div class="svc-card"><div class="icon">🛡️</div><h3>担保交割</h3><p>全程担保<br>买卖双方都安心</p></div>
+  </div>
+</section>
+
+<!-- 红包 -->
+<section class="bonus fade-in">
+  <h2>🎁 成交送红包</h2>
+  <p>卖出账号 → 额外奖励红包</p>
+  <p>买入账号 → 同样有红包福利</p>
+  <p style="color:#ff6a00;margin-top:10px;font-weight:700">红包金额按账号档位面议，成交即发</p>
+</section>
+
+<!-- 流程 -->
+<section class="process fade-in">
+  <h2 class="section-title">交易<span>流程</span></h2>
+  <div class="proc-step"><div class="proc-num">1</div><div class="proc-content"><h3>加QQ说需求</h3><p>告知要买还是要卖，发号源信息或需求条件</p></div></div>
+  <div class="proc-step"><div class="proc-num">2</div><div class="proc-content"><h3>给价 / 挑号</h3><p>收号给报价，出号帮你从在售里挑合适的</p></div></div>
+  <div class="proc-step"><div class="proc-num">3</div><div class="proc-content"><h3>验号 + 担保</h3><p>截图/录屏验号，确认无误走担保交割</p></div></div>
+  <div class="proc-step"><div class="proc-num">4</div><div class="proc-content"><h3>交割 + 发红包</h3><p>交接完成，红包立刻发放</p></div></div>
+</section>
+
+<!-- 评价 -->
+<section class="reviews fade-in">
+  <h2 class="section-title">客户<span>评价</span></h2>
+  <div class="review-grid">
+    <div class="review"><div class="stars">★★★★★</div><p>交易顺利，打款快，客服很实在！</p><div class="who">— 买家 · 2天前</div></div>
+    <div class="review"><div class="stars">★★★★★</div><p>号跟描述一致，担保交割很放心，推荐！</p><div class="who">— 买家 · 5天前</div></div>
+    <div class="review"><div class="stars">★★★★★</div><p>卖了号秒到账，红包也发了，诚信商家！</p><div class="who">— 卖家 · 1周前</div></div>
+    <div class="review"><div class="stars">★★★★★</div><p>找了好几家，这家最靠谱，以后还来。</p><div class="who">— 买家 · 2周前</div></div>
+    <div class="review"><div class="stars">★★★★★</div><p>估价准，没压价，交易流程清晰。</p><div class="who">— 卖家 · 3周前</div></div>
+    <div class="review"><div class="stars">★★★★★</div><p>客服回复快，有问必答，体验很好。</p><div class="who">— 买家 · 1月前</div></div>
+  </div>
+</section>
+
+<!-- 联系 -->
+<section class="contact fade-in">
+  <h2 class="section-title">联系<span>方式</span></h2>
+  <div class="qq">QQ：2363320347</div>
+  <div class="qq-copy" onclick="copyQQ()">📋 点击复制QQ号</div>
+  <a class="qq-copy" href="#" onclick="openQQ();return false;">💬 直接打开QQ聊天</a>
+  <div class="warn">⚠️ 防骗提醒：唯一QQ 2363320347，不通过其他账号联系你。交易绝不先转定金/手续费/保证金，认准此号！</div>
+</section>
+
+<!-- FAQ -->
+<section class="faq fade-in">
+  <h2 class="section-title">常见<span>问题</span></h2>
+  <div class="faq-item"><h3>估价收不收钱？</h3><p>免费估价，不收任何费用。</p></div>
+  <div class="faq-item"><h3>红包什么时候发？</h3><p>交割完成后立即发放，不拖欠。</p></div>
+  <div class="faq-item"><h3>怎么防骗？</h3><p>只走担保交割，绝不先转钱，认准唯一QQ。</p></div>
+  <div class="faq-item"><h3>号源真实吗？</h3><p>每个号都先验号，截图/录屏确认后才上架。</p></div>
+  <div class="faq-item"><h3>支持小刀吗？</h3><p>部分号源可小刀，看卡片备注或直接问。</p></div>
+</section>
+
+<footer>
+  <p>小泽淘号 · 和平精英账号收出 · QQ 2363320347</p>
+  <p>只走担保 · 报价透明 · 售后有保障</p>
+</footer>
+
+<div class="mobile-bar" onclick="copyQQ()">📱 点击复制QQ，立即加 2363320347 问价</div>
+
+<script>
+var QQ='2363320347';
+
+/* 粒子背景 */
+var canvas=document.getElementById('particles'),ctx=canvas.getContext('2d'),W,H,ps=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+window.addEventListener('resize',resize);resize();
+function P(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.45;this.vy=(Math.random()-.5)*.45;this.r=Math.random()*2+1}
+P.prototype.draw=function(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,6.3);ctx.fillStyle='rgba(255,106,0,.35)';ctx.fill()};
+P.prototype.update=function(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1;this.draw()};
+for(var i=0;i<55;i++)ps.push(new P());
+function animate(){ctx.clearRect(0,0,W,H);var i,j,dx,dy,d;for(i=0;i<ps.length;i++)ps[i].update();for(i=0;i<ps.length;i++){for(j=i+1;j<ps.length;j++){dx=ps[i].x-ps[j].x;dy=ps[i].y-ps[j].y;d=dx*dx+dy*dy;if(d<11000){ctx.beginPath();ctx.moveTo(ps[i].x,ps[i].y);ctx.lineTo(ps[j].x,ps[j].y);ctx.strokeStyle='rgba(255,106,0,'+(1-d/11000)*.14+')';ctx.stroke()}}}
+requestAnimationFrame(animate)}animate();
+
+/* 打字机 */
+var twTexts=['小泽淘号','收号出号一步到位','成交就送红包','担保交割零风险','免费估价秒报价'];
+var twIdx=0,twChar=0,twEl=document.getElementById('typewriter'),twDel=false;
+function typewriter(){
+  var t=twTexts[twIdx];
+  if(!twDel){twEl.textContent=t.slice(0,twChar+1);twChar++;
+    if(twChar===t.length-1){twDel=true;setTimeout(typewriter,1600);return}
+    setTimeout(typewriter,110);
+  }else{twEl.textContent=t.slice(0,twChar-1);twChar--;
+    if(twChar===0){twDel=false;twIdx=(twIdx+1)%twTexts.length}
+    setTimeout(typewriter,45)}
+}
+typewriter();
+
+/* 数字滚动 */
+function countUp(el,target,dec){var st=performance.now();function step(now){var p=Math.min((now-st)/1500,1);el.textContent=dec?(p*target).toFixed(1):Math.floor(p*target);if(p<1)requestAnimationFrame(step)}requestAnimationFrame(step)}
+setTimeout(function(){countUp(document.getElementById('n1'),1280,0);countUp(document.getElementById('n2'),47,0);countUp(document.getElementById('n3'),99.8,1)},400);
+
+/* ===== 号源数据：只改这里 ===== */
+var ACC=[
+  {rank:'无敌战神',season:'SS30',hot:'热',name:'满特效战神号',skin:200,gun:30,vehicle:6,weapon:'满级MG3/AMR',price:5000,note:'面议',g:'fire'},
+  {rank:'超级王牌',season:'SS30',hot:'',name:'高特效王牌号',skin:100,gun:20,vehicle:4,weapon:'满级AKM',price:3000,note:'可小刀',g:'gold'}
+];
+/* ============================== */
+
+var colors={fire:'#ff4040',gold:'#ffb347',cyan:'#00f0ff',purp:'#b347ff',lime:'#47ff6a'};
+var rankSet=[],seasonSet=[],i;
+for(i=0;i<ACC.length;i++){if(rankSet.indexOf(ACC[i].rank)<0)rankSet.push(ACC[i].rank);if(seasonSet.indexOf(ACC[i].season)<0)seasonSet.push(ACC[i].season)}
+var rankFilter=document.getElementById('rankFilter'),seasonFilter=document.getElementById('seasonFilter');
+rankFilter.innerHTML='<span class="filter-chip active" data-v="">全部段位</span>'+rankSet.map(function(r){return '<span class="filter-chip" data-v="'+r+'">'+r+'</span>'}).join('');
+seasonFilter.innerHTML='<span class="filter-chip active" data-v="">全部赛季</span>'+seasonSet.map(function(s){return '<span class="filter-chip" data-v="'+s+'">'+s+'</span>'}).join('');
+
+var fRank='',fSeason='',fSkin=0,fSearch='';
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+function renderCards(){
+  var list=document.getElementById('cardList'),out=[];
+  for(var i=0;i<ACC.length;i++){var a=ACC[i];
+    if(fRank&&a.rank!==fRank)continue;
+    if(fSeason&&a.season!==fSeason)continue;
+    if(fSkin&&a.skin<fSkin)continue;
+    if(fSearch){var s=fSearch.toLowerCase();if((a.rank+a.name+a.note+a.season+a.weapon).toLowerCase().indexOf(s)<0&&String(a.price).indexOf(s)<0)continue}
+    out.push('<div class="card">'+(a.hot?'<div class="hot">'+esc(a.hot)+'</div>':'')+
+      '<div class="rank" style="color:'+(colors[a.g]||'#ff6a00')+'">'+esc(a.rank)+'</div>'+
+      '<div class="season">'+esc(a.season)+' · '+esc(a.name)+'</div>'+
+      '<div class="info"><span>🎨 皮肤'+a.skin+'</span><span>🔫 特效枪'+a.gun+'</span><span>🚗 载具'+a.vehicle+'</span><span>'+esc(a.weapon)+'</span></div>'+
+      '<div class="price">¥'+a.price+'</div><div class="note">'+(a.note?esc(a.note)+' · ':'')+'可复制询价语</div>'+
+      '<div class="copy-btn" onclick="copyInquiry('+i+')">📋 复制询价语，去问价</div></div>');
+  }
+  list.innerHTML=out.length?out.join(''):'<p class="empty">暂无符合条件的号源，换个条件试试</p>';
+}
+function bindFilter(box,cb){box.querySelectorAll('.filter-chip').forEach(function(c){c.addEventListener('click',function(){box.querySelectorAll('.filter-chip').forEach(function(x){x.classList.remove('active')});c.classList.add('active');cb(c.dataset.v)})})}
+bindFilter(rankFilter,function(v){fRank=v;renderCards()});
+bindFilter(seasonFilter,function(v){fSeason=v;renderCards()});
+document.getElementById('skinFilter').addEventListener('change',function(){fSkin=parseInt(this.value)||0;renderCards()});
+document.getElementById('searchInput').addEventListener('input',function(){fSearch=this.value;renderCards()});
+renderCards();
+
+/* 复制与跳转 */
+function fallbackCopy(text){var t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity=0;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t)}
+function doCopy(text,okMsg){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){alert(okMsg)},function(){fallbackCopy(text);alert(okMsg)})}else{fallbackCopy(text);alert(okMsg)}}
+function copyQQ(){doCopy(QQ,'QQ号已复制：'+QQ+'\n打开QQ粘贴搜索就能加我')}
+function openQQ(){var u='mqqwpa://im/chat?chat_type=wpa&uin='+QQ;tell();function tell(){doCopy(QQ,'QQ号已复制，正在尝试打开QQ…\n若没弹出来，手动打开QQ粘贴 '+QQ+' 搜索即可')}window.location.href=u;setTimeout(function(){window.open('https://qm.qq.com/cgi-bin/qm/qr?k='+QQ,'_blank')},800)}
+function copyInquiry(i){var a=ACC[i];doCopy('你好，我在小泽淘号网站看到这个号：'+a.rank+' / '+a.season+' / '+a.name+'，标价¥'+a.price+'，还在吗？','询价语已复制！打开QQ粘贴发给我就行')}
+
+/* 滚动淡入 */
+var observer=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.08});
+document.querySelectorAll('.fade-in').forEach(function(el){observer.observe(el)});
+</script>
 </body>
 </html>
+
